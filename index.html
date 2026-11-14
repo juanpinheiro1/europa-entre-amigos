@@ -276,7 +276,7 @@ const DAYS=[
       ['08:20','easyJet EJU4546 Milão Malpensa → Paris Charles de Gaulle','Reserva <code>KDN7F5D</code>. Assentos 16A a 16F. Chega às 10:00 no terminal 2D.','ok'],
       ['12:00','Chegada ao Timhotel Tour Eiffel','Do aeroporto: táxi com tarifa fixa, ou trem RER B e metrô, cerca de 1h15. Check-in a partir das 14h; antes disso, deixar as malas e almoçar por perto. Taxa da cidade de € 11,06 por casal. O hotel não aceita dinheiro.','ok'],
       ['20:15','Sair para o jantar','',''],
-      ['21:15','Jantar no Rio Sena','Reservado. Falta a confirmação com a empresa e o píer de embarque.','ok']]},
+      ['21:15','Cruzeiro com jantar bistronômico no Rio Sena','GetYourGuide, reserva <code>GYGBLG86V98B</code>. O ponto de embarque está nos detalhes do ingresso, no aplicativo.','ok']]},
  {d:'30/11',w:'Seg',k:'lisboa',city:'Paris → Lisboa',title:'Voo para Lisboa',hotel:'HF Fénix Garden · R. Joaquim António de Aguiar, 3',
   hi:['Transavia às 11:35, de Orly','Baixa e Chiado à tarde'],
   ag:[['08:15','Sair do hotel para Orly','Check-in online na véspera.',''],
@@ -303,7 +303,7 @@ const LEGS={recife:'',roma:'Roma',veneza:'Veneza',milao:'Milão',paris:'Paris',l
 /* Documentos em ordem de uso. req obrigatório · have conferido fora da página · noup não se anexa */
 const DOCS=[
  {id:'passaporte',d:'Antes',k:'recife',name:'Passaporte',who:'Individual',req:0,noup:1,note:'Válido pelo menos até 03/03/2027. Não anexar: cada um leva o seu.'},
- {id:'seguro',d:'Antes',k:'recife',name:'Seguro viagem',who:'Individual',req:0,haveBy:['juan'],note:'Cobertura mínima de € 30 mil. Cada um leva o seu no celular. Não fica na página porque traz CPF e endereço.'},
+ {id:'seguro',d:'Antes',k:'recife',name:'Seguro viagem',who:'Individual',req:0,haveBy:['juan','derlopidas'],note:'Cobertura mínima de € 30 mil. Cada um leva o seu no celular. Não fica na página porque traz CPF e endereço.'},
  {id:'iberia',d:'19/11',k:'recife',name:'Bilhete Iberia Recife ⇄ Europa',who:'Por casal',req:1,haveBy:['juan'],note:'Ida em 19/11 e volta em 03/12. Localizador de Juan e Adriana: QNQ39. Cada casal tem o seu. O bilhete não fica na página porque traz dados pessoais.'},
  {id:'hotel-roma',d:'20/11',k:'roma',name:'Voucher do hotel em Roma',who:'Por casal',req:1,note:'Palladium Palace, 20 a 23/11.'},
  {id:'vaticano',d:'21/11',k:'roma',name:'Ingressos dos Museus Vaticanos',who:'Grupo',req:1,note:'A comprar, depois de definir o dia.'},
@@ -317,7 +317,7 @@ const DOCS=[
  {id:'trem-verona',d:'27/11',k:'milao',name:'Trem Milão ⇄ Verona',who:'Grupo',req:1,note:'A comprar.'},
  {id:'milao-paris',d:'29/11',k:'paris',name:'Voo easyJet Milão → Paris',who:'Grupo',req:1,note:'08:20, de Malpensa terminal 2. Reserva KDN7F5D. Cartões de embarque dos seis.'},
  {id:'hotel-paris',d:'29/11',k:'paris',name:'Voucher do hotel em Paris',who:'Por casal',req:1,note:'Timhotel Tour Eiffel, 29 a 30/11.'},
- {id:'jantar-sena',d:'29/11',k:'paris',name:'Confirmação do jantar no Sena',who:'Grupo',req:1,note:'21:15. Precisa mostrar a empresa e o píer de embarque.'},
+ {id:'jantar-sena',d:'29/11',k:'paris',name:'Ingressos do jantar no Sena',who:'Grupo',req:1,note:'GetYourGuide, reserva GYGBLG86V98B, 21:15. Cruzeiro com jantar bistronômico. Falta o ponto de embarque, que aparece nos detalhes do ingresso no aplicativo.'},
  {id:'transavia',d:'30/11',k:'lisboa',name:'Voo Transavia Paris → Lisboa',who:'Grupo',req:1,have:1,note:'11:35, de Orly. Reserva EF6BRT. Marcelo está sem mala despachada.'},
  {id:'hotel-lisboa',d:'30/11',k:'lisboa',name:'Voucher do hotel em Lisboa',who:'Por casal',req:1,note:'HF Fénix Garden, 30/11 a 03/12.'}
 ];
@@ -508,7 +508,9 @@ const CONTACTS=[
  ['Seguro Mastercard · Suíça','0800-89-7092'],
  ['Seguro Mastercard · Portugal','800-8-11-272'],
  ['Seguro Mastercard · Espanha','900-97-1231'],
- ['Seguro SulAmérica (internacional)','+55 11 4126-7463']
+ ['Seguro SulAmérica (internacional)','+55 11 4126-7463'],
+ ['Seguro Vital Card (ligação a cobrar)','+1 786 233 7254'],
+ ['Seguro Vital Card · Espanha','+34 91 060 5956']
 ];
 const LABEL={ok:'Reservado',todo:'A comprar',free:'Sugestão',crit:'Atenção'};
 const $=id=>document.getElementById(id);
@@ -525,6 +527,7 @@ const STATIC=[
  {slot:'transavia',name:'Voo Transavia Paris → Lisboa',imgs:['docs/transavia-1.jpg'],aid:'55dfbf421c0e75ba77f44a1d0e007c55'},
  {slot:'st-moritz',name:'Voucher St. Moritz',imgs:['docs/st-moritz-1.jpg','docs/st-moritz-2.jpg'],aid:'e42f2fcca66cd4861cc17d1ee0c3d4c7'},
  {slot:'milao-paris',name:'Cartões de embarque Milão → Paris',imgs:['docs/milao-paris-1.jpg','docs/milao-paris-2.jpg','docs/milao-paris-3.jpg','docs/milao-paris-4.jpg','docs/milao-paris-5.jpg','docs/milao-paris-6.jpg'],aid:'-'},
+ {slot:'jantar-sena',name:'Ingressos do jantar no Sena',imgs:['docs/jantar-sena-1.jpg','docs/jantar-sena-2.jpg'],aid:'-'},
  {slot:'hotel-roma',casal:'juan',name:'Voucher hotel Roma',imgs:['docs/hotel-roma-1.jpg','docs/hotel-roma-2.jpg'],aid:'1d9a479adf4492eb9b88862fee188911'},
  {slot:'hotel-veneza',casal:'juan',name:'Voucher hotel Veneza',imgs:['docs/hotel-veneza-1.jpg'],aid:'476f7488f8ff26c21e8a966310a3236a'},
  {slot:'hotel-milao',casal:'juan',name:'Voucher hotel Milão',imgs:['docs/hotel-milao-1.jpg'],aid:'51fe8e5b5eb86ea53ad26edeccc2111e'},
