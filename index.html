@@ -275,8 +275,9 @@ const DAYS=[
       ['07:50','Fecha a porta de embarque','',''],
       ['08:20','easyJet EJU4546 Milão Malpensa → Paris Charles de Gaulle','Reserva <code>KDN7F5D</code>. Assentos 16A a 16F. Chega às 10:00 no terminal 2D.','ok'],
       ['12:00','Chegada ao Timhotel Tour Eiffel','Do aeroporto: táxi com tarifa fixa, ou trem RER B e metrô, cerca de 1h15. Check-in a partir das 14h; antes disso, deixar as malas e almoçar por perto. Taxa da cidade de € 11,06 por casal. O hotel não aceita dinheiro.','ok'],
-      ['20:15','Sair para o jantar','',''],
-      ['21:15','Cruzeiro com jantar bistronômico no Rio Sena','GetYourGuide, reserva <code>GYGBLG86V98B</code>. O ponto de embarque está nos detalhes do ingresso, no aplicativo.','ok']]},
+      ['20:15','Sair para o jantar','De táxi, cerca de 15 minutos, ou metrô linha 8 de La Motte-Picquet a Invalides, cerca de 25 minutos com a caminhada.',''],
+      ['20:45','Chegada ao ponto de embarque','8 Port des Invalides, 75007 Paris, na margem do Sena ao lado da Ponte Alexandre III.',''],
+      ['21:15','Cruzeiro com jantar bistronômico no Rio Sena','Eiffel Croisières, pela GetYourGuide, reserva <code>GYGBLG86V98B</code>. Duração de 2 horas: termina por volta das 23:15, no mesmo ponto. Volta ao hotel de táxi.','ok']]},
  {d:'30/11',w:'Seg',k:'lisboa',city:'Paris → Lisboa',title:'Voo para Lisboa',hotel:'HF Fénix Garden · R. Joaquim António de Aguiar, 3',
   hi:['Transavia às 11:35, de Orly','Baixa e Chiado à tarde'],
   ag:[['08:15','Sair do hotel para Orly','Check-in online na véspera.',''],
@@ -317,7 +318,7 @@ const DOCS=[
  {id:'trem-verona',d:'27/11',k:'milao',name:'Trem Milão ⇄ Verona',who:'Grupo',req:1,note:'A comprar.'},
  {id:'milao-paris',d:'29/11',k:'paris',name:'Voo easyJet Milão → Paris',who:'Grupo',req:1,note:'08:20, de Malpensa terminal 2. Reserva KDN7F5D. Cartões de embarque dos seis.'},
  {id:'hotel-paris',d:'29/11',k:'paris',name:'Voucher do hotel em Paris',who:'Por casal',req:1,note:'Timhotel Tour Eiffel, 29 a 30/11.'},
- {id:'jantar-sena',d:'29/11',k:'paris',name:'Ingressos do jantar no Sena',who:'Grupo',req:1,note:'GetYourGuide, reserva GYGBLG86V98B, 21:15. Cruzeiro com jantar bistronômico. Falta o ponto de embarque, que aparece nos detalhes do ingresso no aplicativo.'},
+ {id:'jantar-sena',d:'29/11',k:'paris',name:'Ingressos do jantar no Sena',who:'Grupo',req:1,note:'GetYourGuide, reserva GYGBLG86V98B, 21:15, duração de 2 horas. Barco da Eiffel Croisières. Embarque em 8 Port des Invalides, 75007 Paris. Reservado por Eulália.'},
  {id:'transavia',d:'30/11',k:'lisboa',name:'Voo Transavia Paris → Lisboa',who:'Grupo',req:1,have:1,note:'11:35, de Orly. Reserva EF6BRT. Marcelo está sem mala despachada.'},
  {id:'hotel-lisboa',d:'30/11',k:'lisboa',name:'Voucher do hotel em Lisboa',who:'Por casal',req:1,note:'HF Fénix Garden, 30/11 a 03/12.'}
 ];
@@ -332,7 +333,7 @@ const TIPS={
  '26/11':['Passaporte obrigatório: o passeio entra na Suíça.','Chegar ao ponto de encontro às 07:30. Quem atrasa perde o passeio, sem reembolso.','Guia em espanhol e inglês. O trem é o regional Trenino Rosso, não o Bernina Express.','A Suíça usa franco suíço. Cartão resolve na maioria dos lugares.','Emergência do passeio: +39 348 767 1613, só ligação. Cancelamento com reembolso até 25/11 às 07:45.'],
  '27/11':['Bilhete de trem em papel precisa ser validado na máquina da plataforma antes de embarcar.'],
  '28/11':['Bilhete regional em papel precisa ser validado na máquina da plataforma antes de embarcar.','Acertar hoje a taxa da cidade de Milão (€ 56 por casal): a saída amanhã é às 05:00.','Combinar hoje o táxi ou conferir o primeiro trem para Malpensa. Pedir kit de café da manhã na recepção.','Malas prontas e dormir cedo.'],
- '29/11':['Passaporte em mãos para o voo.','Bagagem easyJet: 1 mala despachada de 23 kg por pessoa. Na cabine só entra uma bolsa pequena de 45 x 36 x 20 cm, debaixo do assento. Mala de cabine grande não está incluída.','A entrega de bagagem fecha às 07:20 e a porta de embarque às 07:50, sem tolerância.','Paris: check-in a partir das 14h. Taxa da cidade de € 5,53 por pessoa, € 11,06 por casal. O hotel não aceita dinheiro, só cartão.','Fazer o check-in online do voo da Transavia para o dia seguinte.'],
+ '29/11':['Passaporte em mãos para o voo.','Bagagem easyJet: 1 mala despachada de 23 kg por pessoa. Na cabine só entra uma bolsa pequena de 45 x 36 x 20 cm, debaixo do assento. Mala de cabine grande não está incluída.','A entrega de bagagem fecha às 07:20 e a porta de embarque às 07:50, sem tolerância.','Paris: check-in a partir das 14h. Taxa da cidade de € 5,53 por pessoa, € 11,06 por casal. O hotel não aceita dinheiro, só cartão.','Jantar no Sena: os ingressos estão no aplicativo GetYourGuide da Eulália, que precisa estar com o celular carregado na entrada.','Fazer o check-in online do voo da Transavia para o dia seguinte.'],
  '30/11':['Check-out em Paris até meio-dia. Acertar a taxa de € 11,06 por casal.','Bagagem Transavia: 1 mala despachada de 20 kg por pessoa, menor que os 23 kg da Iberia. Marcelo está sem mala despachada neste voo.','Lisboa: check-in a partir das 15h. Taxa da cidade de € 4 por pessoa por noite, € 24 por casal nas 3 noites.','O hotel de Lisboa não aceita dinheiro, só cartão.'],
  '02/12':['Acertar a taxa da cidade de Lisboa (€ 24 por casal) na véspera, para sair rápido de madrugada.','Pedir kit de café da manhã na recepção.'],
  '03/12':['O voo sai do terminal 1 de Lisboa. Estar no aeroporto até 06:00.','Bagagem Iberia: 1 mala despachada de 23 kg por pessoa.','Em Madri há controle de passaporte na saída da Europa. Não parar em lojas antes de passar.']
@@ -527,7 +528,7 @@ const STATIC=[
  {slot:'transavia',name:'Voo Transavia Paris → Lisboa',imgs:['docs/transavia-1.jpg'],aid:'55dfbf421c0e75ba77f44a1d0e007c55'},
  {slot:'st-moritz',name:'Voucher St. Moritz',imgs:['docs/st-moritz-1.jpg','docs/st-moritz-2.jpg'],aid:'e42f2fcca66cd4861cc17d1ee0c3d4c7'},
  {slot:'milao-paris',name:'Cartões de embarque Milão → Paris',imgs:['docs/milao-paris-1.jpg','docs/milao-paris-2.jpg','docs/milao-paris-3.jpg','docs/milao-paris-4.jpg','docs/milao-paris-5.jpg','docs/milao-paris-6.jpg'],aid:'-'},
- {slot:'jantar-sena',name:'Ingressos do jantar no Sena',imgs:['docs/jantar-sena-1.jpg','docs/jantar-sena-2.jpg'],aid:'-'},
+ {slot:'jantar-sena',name:'Ingressos do jantar no Sena',imgs:['docs/jantar-sena-1.jpg','docs/jantar-sena-2.jpg','docs/jantar-sena-3.jpg','docs/jantar-sena-4.jpg','docs/jantar-sena-5.jpg'],aid:'-'},
  {slot:'iberia',casal:'derlopidas',name:'Bilhete Iberia',imgs:['docs/iberia-derlopidas-1.jpg'],aid:'-'},
  {slot:'hotel-roma',casal:'derlopidas',name:'Voucher hotel Roma',imgs:['docs/hotel-roma-derlopidas-1.jpg'],aid:'-'},
  {slot:'hotel-veneza',casal:'derlopidas',name:'Voucher hotel Veneza',imgs:['docs/hotel-veneza-derlopidas-1.jpg'],aid:'-'},
