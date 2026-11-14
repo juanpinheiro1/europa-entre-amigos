@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Europa entre amigos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+/* Layout: correio aéreo. Capa com céu de fim de tarde e a rota em arco; abaixo, um cartão-postal por dia,
+   em ordem, com carimbo de data e a cor da cidade. Tema único, claro, por escolha. */
+:root{
+  color-scheme:light;
+  --paper:#fbfaf5; --card:#ffffff; --ink:#1b2a4a; --muted:#5f6b84; --line:#e1ddd0;
+  --red:#d6402f; --blue:#2b5ea7; --sun:#f3b233;
+  --ok:#1d7a52; --ok-soft:#dff3e8; --warn:#8f5a00; --warn-soft:#fdf0cf; --crit:#b3261e; --crit-soft:#fde4e1;
+  --recife:#1b2a4a; --roma:#d1602a; --veneza:#178585; --milao:#7b4a9e; --paris:#2b5ea7; --lisboa:#c98a06;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  --hand:"Caveat","Segoe Script",cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.stripe{height:10px;background:repeating-linear-gradient(135deg,var(--red) 0 14px,var(--paper) 14px 28px,var(--blue) 28px 42px,var(--paper) 42px 56px)}
+
+/* Capa */
+.cover{background:linear-gradient(180deg,#2b5ea7 0%,#5b86c4 34%,#f2a65a 74%,#f7cf7a 100%);color:#fff;padding:26px 0 0;overflow:hidden}
+.cover .hand{font-family:var(--hand);font-size:24px;line-height:1;margin:0 0 4px;color:#fff3cf;transform:rotate(-2deg);transform-origin:left}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,10vw,64px);line-height:.98;margin:0;letter-spacing:-.01em;text-wrap:balance;text-shadow:0 2px 0 rgba(27,42,74,.25)}
+h1 em{font-style:italic;font-weight:700;color:#fff3cf}
+.cover .meta{margin:12px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.cover .meta b{background:#fff;color:var(--red);border-radius:999px;padding:2px 11px;margin-left:6px;white-space:nowrap}
+.routebox{margin-top:8px}
+.routebox svg{display:block;width:100%;height:auto}
+.routebox text{font-family:var(--body);font-weight:800;font-size:22px;fill:#fff}
+.routebox .sm{font-weight:600;font-size:16px;fill:#fff3cf}
+
+/* Abas */
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:6px}
+nav.tabs a{flex:1;text-align:center;padding:13px 6px 10px;text-decoration:none;color:var(--muted);font-weight:800;border-bottom:4px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--red)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.badge{display:inline-block;min-width:22px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--red);color:#fff;font-size:12.5px;line-height:22px;font-variant-numeric:tabular-nums}
+
+main{padding:20px 0 48px}
+section.view{display:none;flex-direction:column;gap:14px}
+section.view.on{display:flex}
+p.lead{margin:0;color:var(--muted);max-width:62ch}
+.leg{font-family:var(--display);font-weight:800;font-size:22px;margin:14px 0 0;display:flex;align-items:center;gap:10px}
+.leg::after{content:"";flex:1;border-top:2px dotted var(--line)}
+.leg i{width:14px;height:14px;border-radius:50%;background:var(--c);flex:none}
+
+/* Cartão do dia */
+details.day{background:var(--card);border:1px solid var(--line);border-left:7px solid var(--c);border-radius:10px;box-shadow:0 1px 0 rgba(27,42,74,.05)}
+details.day[open]{box-shadow:0 6px 18px rgba(27,42,74,.10)}
+details.day summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:70px 1fr 22px;gap:12px;padding:14px 12px 14px 12px;align-items:start;border-radius:10px}
+details.day summary::-webkit-details-marker{display:none}
+.stamp{align-self:start;border:2px dashed var(--c);color:var(--c);border-radius:8px;text-align:center;padding:6px 2px 5px;transform:rotate(-3deg);font-variant-numeric:tabular-nums;background:var(--card)}
+.stamp b{display:block;font-family:var(--display);font-weight:800;font-size:21px;line-height:1}
+.stamp span{display:block;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.stamp small{display:block;font-family:var(--hand);font-size:16px;line-height:1;margin-top:2px}
+.sum h3{font-family:var(--display);font-weight:800;font-size:19px;line-height:1.2;margin:0;text-wrap:balance}
+.sum .city{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--c);margin:0 0 2px}
+ul.hi{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2px;color:var(--ink);font-size:15px}
+ul.hi li{padding-left:16px;position:relative}
+ul.hi li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--c)}
+.flag{display:inline-block;margin-top:8px}
+.chev{width:22px;height:22px;margin-top:4px;color:var(--muted);transition:transform .2s}
+details[open] .chev{transform:rotate(180deg)}
+.more{padding:2px 14px 16px 14px;display:flex;flex-direction:column;gap:12px;border-top:1px dashed var(--line);margin:0 12px;padding-top:14px;padding-left:0;padding-right:0}
+ol.agenda{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ol.agenda li{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:0 0 14px;position:relative}
+ol.agenda li::before{content:"";position:absolute;left:63px;top:8px;bottom:-6px;border-left:2px dotted var(--line)}
+ol.agenda li:last-child{padding-bottom:0}
+ol.agenda li:last-child::before{display:none}
+ol.agenda .t{font-weight:800;font-size:14px;color:var(--c);text-align:right;font-variant-numeric:tabular-nums;padding-top:1px}
+ol.agenda .w{padding-left:14px;position:relative;min-width:0}
+ol.agenda .w::before{content:"";position:absolute;left:-1px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--card);border:3px solid var(--c)}
+ol.agenda b{font-weight:800}
+ol.agenda small{display:block;color:var(--muted);font-size:14px}
+.chip{display:inline-block;font-size:12px;font-weight:800;padding:1px 9px;border-radius:999px;white-space:nowrap;vertical-align:1px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.todo{background:var(--warn-soft);color:var(--warn)}
+.chip.crit{background:var(--crit-soft);color:var(--crit)}
+.chip.free{background:#e6eefb;color:var(--blue)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:#eef1f6;padding:1px 6px;border-radius:4px;font-weight:600}
+.alert{border-left:5px solid var(--warn);background:var(--warn-soft);padding:10px 13px;border-radius:6px;font-size:15px}
+.alert.crit{border-left-color:var(--crit);background:var(--crit-soft)}
+.alert b{display:block}
+.route{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px;background:#fcfbf7}
+.route .ttl{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--c)}
+.rintro{margin:0;font-size:15px}
+.rsum{margin:0;font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums}
+.rmap{display:block;width:100%;max-width:420px;height:auto;background:#eef3f7;border-radius:8px;align-self:center}
+.rmap text{font-family:var(--body);font-weight:800;font-size:10px;fill:#fff}
+.rmap text.north{fill:var(--muted);font-size:11px}
+.legl{color:var(--c)!important;font-weight:600;margin-bottom:2px}
+.num{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:var(--c);color:#fff;font-size:12px;margin-right:2px}
+.stay{color:var(--muted);font-size:13.5px;font-weight:600;white-space:nowrap}
+.rcap{margin:0;color:var(--muted);font-size:13px}
+.tips{background:#fff7e0;border:1px solid #f1dfaa;border-radius:8px;padding:10px 12px}
+.tips .ttl{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--warn)}
+.tips ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+.sleep{font-size:14.5px;color:var(--muted);margin:0}
+.sleep b{color:var(--ink)}
+.daydocs{display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.daydocs .ttl{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.daydocs div{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.daydocs a{color:var(--blue);font-weight:800}
+
+/* Documentos */
+.progress{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.progress .n{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.bar{height:10px;background:#eceadf;border-radius:999px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:999px}
+.status{font-size:14px;color:var(--muted);margin:8px 0 0}
+.doc{display:grid;grid-template-columns:70px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-left:7px solid var(--c);border-radius:10px;padding:14px 12px}
+.doc.miss{background:#fff8f6;border-color:#f1c9c4;border-left-color:var(--crit)}
+.doc .b{display:flex;flex-direction:column;gap:7px;min-width:0}
+.doc .head{display:flex;gap:8px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.doc .name{font-weight:800;font-size:16.5px;line-height:1.25}
+.doc .note{margin:0;color:var(--muted);font-size:14.5px}
+.files{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.files li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14.5px}
+.files .meta{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums;word-break:break-word}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-block;border:2px solid var(--blue);color:var(--blue);background:var(--card);border-radius:999px;padding:5px 15px;font-weight:800;font-size:14px;text-decoration:none}
+.btn.solid{background:var(--blue);color:#fff}
+.btn.red{border-color:var(--crit);color:var(--crit)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn.del{border:1px solid var(--line);color:var(--muted);padding:2px 10px;font-size:13px;font-weight:600}
+.btn.del.sure{border-color:var(--crit);color:var(--crit)}
+.msg{font-size:14px;margin:0}
+.msg.err{color:var(--crit)}
+.cp{border-top:1px dashed var(--line);padding-top:9px;display:flex;flex-direction:column;gap:6px}
+.cph{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.cname{font-weight:800;font-size:15px}
+.viewer{position:fixed;inset:0;z-index:20;background:#101827;display:none;flex-direction:column}
+.viewer.on{display:flex}
+.vbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--ink);color:#fff}
+.vbar span{font-weight:800;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.vbar button{flex:none;border:2px solid #fff;background:transparent;color:#fff;border-radius:999px;padding:5px 16px;font-weight:800}
+.vbody{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.vbody canvas,.vbody img{max-width:100%;height:auto;background:#fff;border-radius:4px}
+.vbody p{color:#fff;margin:24px 8px;text-align:center}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin:0;font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+footer{color:var(--muted);font-size:13px;padding:14px 0 28px}
+@media (max-width:420px){details.day summary,.doc{grid-template-columns:60px 1fr 20px}.doc{grid-template-columns:60px 1fr}.stamp b{font-size:18px}}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<header class="cover">
+  <div class="wrap">
+    <p class="hand">Férias 2026</p>
+    <h1>Europa <em>entre amigos</em></h1>
+    <p class="meta">19/11 a 03/12 · 15 dias · 6 viajantes <b id="count"></b></p>
+  </div>
+  <div class="wrap routebox">
+    <svg viewBox="0 0 720 150" role="img" aria-label="Rota: Recife, Roma, Veneza, Milão, Paris, Lisboa, Recife">
+      <path id="rt" d="M30 112 C 110 20, 170 20, 200 70 S 280 110, 310 62 S 390 30, 420 74 S 500 120, 530 66 S 610 36, 640 72 S 680 104, 690 108" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+      <g fill="#fff" stroke="#1b2a4a" stroke-width="2.5">
+        <circle cx="30" cy="112" r="6"/><circle cx="200" cy="70" r="7"/><circle cx="310" cy="62" r="7"/><circle cx="420" cy="74" r="7"/><circle cx="530" cy="66" r="7"/><circle cx="640" cy="72" r="7"/><circle cx="690" cy="108" r="6"/>
+      </g>
+      <text x="6" y="142">Recife</text>
+      <text x="176" y="104">Roma</text><text x="178" y="122" class="sm">20–23</text>
+      <text x="276" y="42">Veneza</text><text x="286" y="20" class="sm">23–25</text>
+      <text x="394" y="110">Milão</text><text x="398" y="128" class="sm">25–29</text>
+      <text x="506" y="46">Paris</text><text x="508" y="24" class="sm">29–30</text>
+      <text x="610" y="52">Lisboa</text><text x="618" y="30" class="sm">30–03</text>
+      <path d="M0 -7 L16 0 L0 7 L4 0 Z" fill="#fff" stroke="#1b2a4a" stroke-width="1.5">
+        <animateMotion dur="3.2s" begin="0.3s" fill="freeze" rotate="auto" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"><mpath href="#rt"/></animateMotion>
+      </path>
+    </svg>
+  </div>
+</header>
+<div class="stripe"></div>
+<nav class="tabs" aria-label="Seções"><div class="wrap">
+  <a href="#viagem" data-v="viagem">A viagem</a>
+  <a href="#documentos" data-v="documentos">Documentos<span class="badge" id="badge"></span></a>
+</div></nav>
+<main class="wrap">
+  <section class="view" id="v-viagem">
+    <p class="lead">Um cartão por dia, na ordem da viagem. Toque no dia para abrir a agenda com os horários, as taxas e o que levar.</p>
+    <div id="days" style="display:flex;flex-direction:column;gap:12px"></div>
+    <h2 class="leg" style="--c:var(--red)"><i></i>Emergência e contatos</h2>
+    <dl class="kv" id="contacts"></dl>
+  </section>
+  <section class="view" id="v-documentos">
+    <div class="progress">
+      <div class="n" id="prog"></div>
+      <div class="bar"><i id="progbar" style="width:0"></i></div>
+      <p class="status" id="docstatus">Toque em Abrir para ver o documento.</p>
+    </div>
+    <p class="lead">Na ordem em que vão ser usados. Bilhetes do grupo valem para os seis. Passagem aérea, hotéis e seguro têm um espaço para cada casal. O que falta fica em vermelho: mande o arquivo para o Juan incluir.</p>
+    <div id="docs" style="display:flex;flex-direction:column;gap:12px"></div>
+  </section>
+</main>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Documento">
+  <div class="vbar"><span id="vname"></span><button id="vclose" type="button">Fechar</button></div>
+  <div class="vbody" id="vbody"></div>
+</div>
+<div class="wrap"><footer>Horários locais de cada cidade. Conferido nos vouchers recebidos até 13/11/2026.</footer></div>
+
+<script>
+/* agenda: [hora, o quê, detalhe, status]. status: ok reservado · todo a comprar · free sugestão · crit problema */
+const DAYS=[
+ {d:'19/11',w:'Qui',k:'recife',city:'Recife',title:'Dia do embarque',
+  hi:['Voo Iberia para Madri às 18:15','Noite a bordo'],
+  ag:[['15:15','Chegar ao aeroporto do Recife','Três horas antes do voo. Passaporte, seguro e vouchers na bagagem de mão.',''],
+      ['18:15','Iberia IB140 Recife → Madri','8 horas de voo. Pousa às 06:15 do dia 20. 1 mala de 23 kg por pessoa.','ok']]},
+ {d:'20/11',w:'Sex',k:'roma',city:'Roma',title:'Chegada a Roma',hotel:'Hotel Palladium Palace · Via Gioberti, 36',
+  hi:['Conexão em Madri pela manhã','Chegada a Roma às 11:10','Fontana di Trevi e Pantheon à tarde'],
+  ag:[['06:15','Pouso em Madri','Imigração europeia e coleta de biometria aqui. Chega no terminal 4S e o voo para Roma sai do terminal 4. Conexão de 2h30.',''],
+      ['08:45','Iberia IB647 Madri → Roma','2h25 de voo.','ok'],
+      ['11:10','Chegada a Roma Fiumicino','Trem Leonardo Express até a estação Termini, cerca de 32 min.',''],
+      ['13:00','Chegada ao Palladium Palace','Ao lado da estação Termini. Check-in a partir das 14h; antes disso, deixar as malas. Taxa da cidade de € 45 por casal, paga no hotel.','ok'],
+      ['Tarde','Centro histórico a pé','Fontana di Trevi, Pantheon e Piazza Navona. Dia leve depois da noite de voo.','free']]},
+ {d:'21/11',w:'Sáb',k:'roma',city:'Roma ⇄ Florença',title:'Bate-volta a Florença',hotel:'Hotel Palladium Palace',
+  hi:['Trem de alta velocidade, 1h30','Duomo, Ponte Vecchio e Piazza della Signoria'],flag:['todo','Trem a comprar'],
+  ag:[['Manhã','Trem Roma Termini → Firenze S. M. Novella','Cerca de 1h30. Bilhete ainda não comprado.','todo'],
+      ['Dia','Florença a pé','Duomo, Piazza della Signoria, Ponte Vecchio. Tudo perto da estação.','free'],
+      ['Noite','Trem de volta a Roma','','todo']],
+  alert:['warn','Proposta: trocar com o domingo','Vaticano neste sábado e Florença no domingo 22, porque os Museus Vaticanos fecham aos domingos.']},
+ {d:'22/11',w:'Dom',k:'roma',city:'Roma',title:'Roma Antiga e Vaticano',hotel:'Hotel Palladium Palace',
+  hi:['Coliseu e Fórum Romano de manhã','Basílica de São Pedro à tarde','Museus Vaticanos fechados no domingo'],flag:['crit','Museus fechados'],
+  ag:[['Manhã','Basílica de São Pedro','Aberta aos domingos, entrada gratuita. Metrô linha A até Ottaviano.','free'],
+      ['—','Museus Vaticanos e Capela Sistina','Fechados neste domingo. Só abrem no último domingo do mês, dia 29/11.','crit'],
+      ['Tarde','Castelo Sant’Angelo e Trastevere','','free']],
+  alert:['crit','Museus Vaticanos fechados no domingo','Para ver a Capela Sistina, o Vaticano precisa ir para o sábado 21. Ingresso só no site oficial tickets.museivaticani.va.']},
+ {d:'23/11',w:'Seg',k:'veneza',city:'Roma → Veneza',title:'Trem para Veneza',hotel:'NH Venezia Santa Lucia · Rio Terà Lista di Spagna, 116/A',
+  hi:['Italo às 08:55, chega 12:55','Rialto e São Marcos à tarde'],
+  ag:[['08:25','Estar na estação Termini','A 5 min a pé do hotel. O embarque fecha 2 min antes da partida.',''],
+      ['08:55','Italo 8906 Roma → Venezia S. Lucia','Vagão 1, Prima Business, Fast Track. Código <code>YD2L4C</code>.','ok'],
+      ['12:55','Chegada a Veneza','Hotel ao lado da estação. Taxa da cidade paga no hotel.','ok'],
+      ['Tarde','Primeiro passeio','Ponte de Rialto e caminhada até a Praça São Marcos.','free']]},
+ {d:'24/11',w:'Ter',k:'veneza',city:'Veneza',title:'Dia inteiro em Veneza',hotel:'NH Venezia Santa Lucia',
+  hi:['Basílica de São Marcos e Palácio Ducal','Accademia, Salute e Frari a pé'],
+  ag:[['Manhã','Praça São Marcos','Basílica e Palácio Ducal.','free'],
+      ['Tarde','Grande Canal','Vaporetto linha 1 de ponta a ponta. Gôndola opcional.','free'],
+      ['Noite','Deixar as malas prontas','Trem cedo no dia seguinte.','']]},
+ {d:'25/11',w:'Qua',k:'milao',city:'Veneza → Milão',title:'Trem para Milão',hotel:'ibis Styles Milano Centro · Via Ruggero Boscovich, 57/59',
+  hi:['Italo às 07:57, chega 10:25','Duomo e Galleria à tarde'],
+  ag:[['07:30','Estar na estação Santa Lucia','Café da manhã cedo. Hotel ao lado da estação.',''],
+      ['07:57','Italo 8974 Venezia → Milano Centrale','Vagão 2, Prima Business. Código <code>LKJ7SX</code>.','ok'],
+      ['10:25','Chegada a Milão','Hotel perto da estação Centrale. Deixar as malas até liberar o quarto. Taxa da cidade de € 56 por casal, paga no hotel.','ok'],
+      ['Tarde','Centro de Milão','Duomo, Galleria Vittorio Emanuele II e Teatro alla Scala.','free']]},
+ {d:'26/11',w:'Qui',k:'milao',city:'Milão ⇄ St. Moritz',title:'St. Moritz de trem, na Suíça',hotel:'ibis Styles Milano Centro',
+  hi:['Saída às 07:45 da Piazza Duca d’Aosta','Trem pelos Alpes','Levar passaporte e roupa de neve'],
+  ag:[['07:15','Sair do hotel a pé','Cerca de 10 minutos até a Piazza Duca d’Aosta.',''],
+      ['07:30','Ponto de encontro','Piazza Duca d’Aosta, em frente à estação Milano Centrale. Chegar 15 min antes.','ok'],
+      ['07:45','Saída do passeio (Civitatis)','Reserva <code>A42406059</code>, 6 pessoas, já paga. Passaporte em mãos: entrada na Suíça.','ok'],
+      ['Dia','Trem pelos Alpes e St. Moritz','Trem regional Trenino Rosso, com guia em espanhol e inglês. Frio e neve. Emergência do passeio: +39 348 767 1613 (só ligação).','ok']]},
+ {d:'27/11',w:'Sex',k:'milao',city:'Milão ⇄ Verona',title:'Bate-volta a Verona',hotel:'ibis Styles Milano Centro',
+  hi:['Trem de 1h15','Arena e Casa de Julieta'],flag:['todo','Trem a comprar'],
+  ag:[['Manhã','Trem Milano Centrale → Verona Porta Nuova','Cerca de 1h15. Bilhete ainda não comprado.','todo'],
+      ['Dia','Verona','Arena, Piazza delle Erbe e Casa de Julieta.','free'],
+      ['Noite','Trem de volta a Milão','','todo']]},
+ {d:'28/11',w:'Sáb',k:'milao',city:'Milão ⇄ Bergamo',title:'Bate-volta a Bergamo',hotel:'ibis Styles Milano Centro',
+  hi:['Trem regional de 50 min','Città Alta de funicular'],
+  ag:[['Manhã','Trem regional Milano Centrale → Bergamo','Cerca de 50 min. Compra na hora, na estação.','todo'],
+      ['Dia','Bergamo','Funicular até a Città Alta, Piazza Vecchia.','free'],
+      ['Noite','Malas prontas','Deslocamento a Paris no dia seguinte.','']]},
+ {d:'29/11',w:'Dom',k:'paris',city:'Milão → Paris',title:'Paris e jantar no Sena',hotel:'Timhotel Tour Eiffel · 11 Rue Juge, 15e',
+  hi:['Deslocamento Milão → Paris','Torre Eiffel e Trocadéro ao anoitecer','Jantar no Rio Sena às 21:15'],flag:['crit','Trecho sem bilhete'],
+  ag:[['?','Milão → Paris','Nenhum bilhete recebido para este trecho.','crit'],
+      ['Tarde','Check-in no Timhotel Tour Eiffel','A pé da Torre Eiffel. Check-in a partir das 14h. Taxa da cidade de € 11,06 por casal. O hotel não aceita dinheiro.','ok'],
+      ['21:15','Jantar no Rio Sena','Reservado. Falta a confirmação com a empresa e o píer de embarque.','ok']],
+  alert:['crit','Milão → Paris sem bilhete','É o trecho que garante o jantar das 21:15. Precisa chegar a Paris até o fim da tarde.']},
+ {d:'30/11',w:'Seg',k:'lisboa',city:'Paris → Lisboa',title:'Voo para Lisboa',hotel:'HF Fénix Garden · R. Joaquim António de Aguiar, 3',
+  hi:['Transavia às 11:35, de Orly','Baixa e Chiado à tarde'],
+  ag:[['08:15','Sair do hotel para Orly','Check-in online na véspera.',''],
+      ['11:35','Transavia TO7644 Paris Orly → Lisboa','Reserva <code>EF6BRT</code>. 1 mala de 20 kg por pessoa.','ok'],
+      ['13:15','Chegada a Lisboa','Hotel junto ao metrô Marquês de Pombal. Check-in a partir das 15h. Taxa da cidade de € 24 por casal. O hotel não aceita dinheiro.','ok'],
+      ['Tarde','Baixa e Chiado','Praça do Comércio e pôr do sol no Miradouro de São Pedro de Alcântara.','free']]},
+ {d:'01/12',w:'Ter',k:'lisboa',city:'Lisboa',title:'Lisboa: Belém',hotel:'HF Fénix Garden',
+  hi:['Mosteiro dos Jerónimos e Torre de Belém','Pastéis de Belém'],
+  ag:[['Manhã','Belém','Mosteiro dos Jerónimos e Torre de Belém.','free'],
+      ['Tarde','Pastéis de Belém e beira do Tejo','','free']]},
+ {d:'02/12',w:'Qua',k:'lisboa',city:'Lisboa',title:'Lisboa: Alfama e Baixa',hotel:'HF Fénix Garden',
+  hi:['Alfama e Castelo de São Jorge','Últimas compras na Baixa','Dormir cedo: saída de madrugada'],
+  ag:[['Dia','Alfama e Castelo de São Jorge','Ou bate-volta a Sintra. Escolher um dos dois.','free'],
+      ['Noite','Malas prontas','Pedir kit de café da manhã na recepção.','']]},
+ {d:'03/12',w:'Qui',k:'recife',city:'Lisboa → Recife',title:'Volta para casa',
+  hi:['Saída do hotel às 05:30','Conexão curta em Madri','Chegada ao Recife às 16:45'],
+  ag:[['05:30','Sair do hotel para o aeroporto','',''],
+      ['08:20','Iberia IB530 Lisboa → Madri','Pousa às 10:45.','ok'],
+      ['10:45','Conexão em Madri: 1h20','Do terminal 4 para o 4S, com controle de passaporte no caminho. Ir direto ao portão.',''],
+      ['12:05','Iberia IB139 Madri → Recife','Horário confirmado. 1 mala de 23 kg por pessoa.','ok'],
+      ['16:45','Chegada ao Recife','','']]}
+];
+const LEGS={recife:'',roma:'Roma',veneza:'Veneza',milao:'Milão',paris:'Paris',lisboa:'Lisboa'};
+/* Documentos em ordem de uso. req obrigatório · have conferido fora da página · noup não se anexa */
+const DOCS=[
+ {id:'passaporte',d:'Antes',k:'recife',name:'Passaporte',who:'Individual',req:0,noup:1,note:'Válido pelo menos até 03/03/2027. Não anexar: cada um leva o seu.'},
+ {id:'seguro',d:'Antes',k:'recife',name:'Seguro viagem',who:'Individual',req:0,haveBy:['juan'],note:'Cobertura mínima de € 30 mil. Cada um leva o seu no celular. Não fica na página porque traz CPF e endereço.'},
+ {id:'iberia',d:'19/11',k:'recife',name:'Bilhete Iberia Recife ⇄ Europa',who:'Por casal',req:1,haveBy:['juan'],note:'Ida em 19/11 e volta em 03/12. Localizador de Juan e Adriana: QNQ39. Cada casal tem o seu. O bilhete não fica na página porque traz dados pessoais.'},
+ {id:'hotel-roma',d:'20/11',k:'roma',name:'Voucher do hotel em Roma',who:'Por casal',req:1,note:'Palladium Palace, 20 a 23/11.'},
+ {id:'vaticano',d:'21/11',k:'roma',name:'Ingressos dos Museus Vaticanos',who:'Grupo',req:1,note:'A comprar, depois de definir o dia.'},
+ {id:'trem-florenca',d:'21/11',k:'roma',name:'Trem Roma ⇄ Florença',who:'Grupo',req:1,note:'A comprar. Definir antes se o dia é 21 ou 22/11.'},
+ {id:'coliseu',d:'22/11',k:'roma',name:'Ingressos do Coliseu e Fórum Romano',who:'Grupo',req:0,note:'Sugerido para a manhã de 22/11. Comprar com hora marcada.'},
+ {id:'italo-roma-veneza',d:'23/11',k:'veneza',name:'Trem Italo Roma → Veneza',who:'Grupo',req:1,have:1,note:'08:55, vagão 1. Código YD2L4C.'},
+ {id:'hotel-veneza',d:'23/11',k:'veneza',name:'Voucher do hotel em Veneza',who:'Por casal',req:1,note:'NH Venezia Santa Lucia, 23 a 25/11.'},
+ {id:'italo-veneza-milao',d:'25/11',k:'milao',name:'Trem Italo Veneza → Milão',who:'Grupo',req:1,have:1,note:'07:57, vagão 2. Código LKJ7SX.'},
+ {id:'hotel-milao',d:'25/11',k:'milao',name:'Voucher do hotel em Milão',who:'Por casal',req:1,note:'ibis Styles Milano Centro, 25 a 29/11.'},
+ {id:'st-moritz',d:'26/11',k:'milao',name:'Voucher do passeio a St. Moritz',who:'Grupo',req:1,note:'Civitatis, reserva A42406059, 6 pessoas, pago. Saída 07:45 da Piazza Duca d’Aosta.'},
+ {id:'trem-verona',d:'27/11',k:'milao',name:'Trem Milão ⇄ Verona',who:'Grupo',req:1,note:'A comprar.'},
+ {id:'milao-paris',d:'29/11',k:'paris',name:'Bilhete Milão → Paris',who:'Grupo',req:1,crit:1,note:'Nenhum bilhete recebido. Trecho crítico por causa do jantar das 21:15.'},
+ {id:'hotel-paris',d:'29/11',k:'paris',name:'Voucher do hotel em Paris',who:'Por casal',req:1,note:'Timhotel Tour Eiffel, 29 a 30/11.'},
+ {id:'jantar-sena',d:'29/11',k:'paris',name:'Confirmação do jantar no Sena',who:'Grupo',req:1,note:'21:15. Precisa mostrar a empresa e o píer de embarque.'},
+ {id:'transavia',d:'30/11',k:'lisboa',name:'Voo Transavia Paris → Lisboa',who:'Grupo',req:1,have:1,note:'11:35, de Orly. Reserva EF6BRT. Marcelo está sem mala despachada.'},
+ {id:'hotel-lisboa',d:'30/11',k:'lisboa',name:'Voucher do hotel em Lisboa',who:'Por casal',req:1,note:'HF Fénix Garden, 30/11 a 03/12.'}
+];
+const TIPS={
+ '19/11':['Passaporte válido pelo menos até 03/03/2027.','Chegar ao aeroporto 3 horas antes do voo.','Bagagem Iberia: 1 mala despachada de 23 kg por pessoa, mais a bagagem de mão.','Levar na bagagem de mão: seguro viagem, vouchers dos hotéis e o bilhete de volta. A imigração pode pedir.','Quem não embarca em um voo da Iberia perde os voos seguintes do mesmo bilhete.'],
+ '20/11':['Imigração em Madri: passaporte, seguro viagem, comprovante dos hotéis e da volta. Há coleta de foto e digitais na primeira entrada.','Check-in do hotel a partir das 14h. Todos os hóspedes precisam estar presentes, com passaporte.','Taxa da cidade de Roma: € 7,50 por pessoa por noite, € 45 por casal nas 3 noites. Paga no hotel, fora do voucher.','O hotel pode pedir cartão de crédito como garantia de extras.'],
+ '21/11':['Trem de alta velocidade tem lugar marcado: comprar antes para o grupo viajar junto.','Ingressos do Vaticano só no site oficial tickets.museivaticani.va.'],
+ '22/11':['Basílica de São Pedro exige ombros e joelhos cobertos.','Museus Vaticanos e Capela Sistina não abrem neste domingo.'],
+ '23/11':['Acertar a taxa da cidade de Roma (€ 45 por casal) na saída do hotel. Check-out até meio-dia.','Trem Italo: basta mostrar o PDF do bilhete no celular. O embarque fecha 2 minutos antes da partida.','Veneza cobra taxa da cidade, paga no hotel. O voucher não informa o valor.','O hotel de Veneza pode pedir caução em cartão ou dinheiro, devolvida na saída.'],
+ '24/11':['Deixar as malas prontas à noite: o trem para Milão sai às 07:57.'],
+ '25/11':['Acertar a taxa da cidade de Veneza na saída do hotel.','Taxa da cidade de Milão: € 56 por casal nas 4 noites. Paga no hotel, fora do voucher.','O quarto em Milão pode não estar liberado às 10:25: deixar as malas na recepção.'],
+ '26/11':['Passaporte obrigatório: o passeio entra na Suíça.','Chegar ao ponto de encontro às 07:30. Quem atrasa perde o passeio, sem reembolso.','Guia em espanhol e inglês. O trem é o regional Trenino Rosso, não o Bernina Express.','A Suíça usa franco suíço. Cartão resolve na maioria dos lugares.','Emergência do passeio: +39 348 767 1613, só ligação. Cancelamento com reembolso até 25/11 às 07:45.'],
+ '27/11':['Bilhete de trem em papel precisa ser validado na máquina da plataforma antes de embarcar.'],
+ '28/11':['Bilhete regional em papel precisa ser validado na máquina da plataforma antes de embarcar.','Deixar as malas prontas à noite.'],
+ '29/11':['Acertar a taxa da cidade de Milão (€ 56 por casal) na saída do hotel.','Paris: check-in a partir das 14h. Taxa da cidade de € 5,53 por pessoa, € 11,06 por casal.','O hotel de Paris não aceita dinheiro, só cartão.','Fazer o check-in online do voo da Transavia para o dia seguinte.'],
+ '30/11':['Check-out em Paris até meio-dia. Acertar a taxa de € 11,06 por casal.','Bagagem Transavia: 1 mala despachada de 20 kg por pessoa, menor que os 23 kg da Iberia. Marcelo está sem mala despachada neste voo.','Lisboa: check-in a partir das 15h. Taxa da cidade de € 4 por pessoa por noite, € 24 por casal nas 3 noites.','O hotel de Lisboa não aceita dinheiro, só cartão.'],
+ '02/12':['Acertar a taxa da cidade de Lisboa (€ 24 por casal) na véspera, para sair rápido de madrugada.','Pedir kit de café da manhã na recepção.'],
+ '03/12':['O voo sai do terminal 1 de Lisboa. Estar no aeroporto até 06:00.','Bagagem Iberia: 1 mala despachada de 23 kg por pessoa.','Em Madri há controle de passaporte na saída da Europa. Não parar em lojas antes de passar.']
+};
+/* Roteiros sugeridos. stay em minutos. leg: [modo, minutos] até esta parada; sem leg = a pé, calculado pela distância.
+   off: fora do mapa esquemático (hotel ou estação de outra cidade). g: nome para o Google Maps. */
+const H={
+ roma:{n:'Hotel Palladium Palace',c:[41.8992,12.5008],g:'Via Gioberti 36, Roma'},
+ veneza:{n:'Hotel NH Venezia Santa Lucia',c:[45.4423,12.3236],g:'Rio Terà Lista di Spagna 116, Venezia'},
+ milao:{n:'Hotel ibis Styles Milano Centro',c:[45.4812,9.2062],g:'Via Ruggero Boscovich 57, Milano'},
+ paris:{n:'Timhotel Tour Eiffel',c:[48.8497,2.2926],g:'11 Rue Juge, 75015 Paris'},
+ lisboa:{n:'Hotel HF Fénix Garden',c:[38.7243,-9.1508],g:'Rua Joaquim António de Aguiar 3, Lisboa'}
+};
+const ROUTES={
+ '20/11':{start:'15:30',mode:'walking',intro:'Tarde leve depois da noite de voo: os três cartões-postais do centro, todos a poucos minutos um do outro.',stops:[
+  {...H.roma},
+  {n:'Piazza di Spagna',c:[41.9057,12.4823],stay:20,leg:['metrô A, de Termini a Spagna',15],g:'Piazza di Spagna, Roma',note:'Escadaria e Fontana della Barcaccia.'},
+  {n:'Fontana di Trevi',c:[41.9009,12.4833],stay:25,g:'Fontana di Trevi, Roma',note:'Ainda com luz do dia. O sol se põe por volta das 16:45.'},
+  {n:'Pantheon',c:[41.8986,12.4769],stay:30,g:'Pantheon, Roma',note:'Entrada paga, compra na hora ou pelo site.'},
+  {n:'Piazza Navona',c:[41.8992,12.4731],stay:30,g:'Piazza Navona, Roma',note:'Fonte dos Quatro Rios, de Bernini.'},
+  {n:'Jantar perto da Piazza Navona',c:[41.8975,12.4725],stay:105,note:'Os restaurantes abrem para o jantar por volta das 19h. Antes disso, aperitivo.'},
+  {...H.roma,leg:['táxi',15]}]},
+ '21/11':{start:'07:30',mode:'walking',intro:'Florença é compacta: da estação dá para fazer tudo a pé. O horário abaixo supõe um trem por volta das 08:00, a ajustar quando o bilhete for comprado.',stops:[
+  {...H.roma,off:1},
+  {n:'Estação Roma Termini',c:[41.9010,12.5018],stay:25,off:1,note:'Chegar 20 min antes do trem.'},
+  {n:'Estação Firenze S. M. Novella',c:[43.7765,11.2480],stay:5,leg:['trem de alta velocidade',95],g:'Firenze Santa Maria Novella'},
+  {n:'Duomo de Florença',c:[43.7731,11.2560],stay:75,g:'Duomo di Firenze',note:'Catedral, Batistério e Campanário. Subir na cúpula só com reserva antecipada.'},
+  {n:'Piazza della Signoria',c:[43.7696,11.2558],stay:30,g:'Piazza della Signoria, Firenze',note:'Palazzo Vecchio e a Loggia dei Lanzi, um museu de esculturas ao ar livre.'},
+  {n:'Ponte Vecchio',c:[43.7680,11.2531],stay:20,g:'Ponte Vecchio, Firenze'},
+  {n:'Almoço perto do Ponte Vecchio',c:[43.7672,11.2518],stay:75},
+  {n:'Basílica de Santa Croce',c:[43.7686,11.2622],stay:40,g:'Basilica di Santa Croce, Firenze',note:'Túmulos de Michelangelo e Galileu.'},
+  {n:'Mercado de San Lorenzo',c:[43.7749,11.2540],stay:40,g:'Mercato Centrale, Firenze',note:'Couro e lembranças. Bom para um café.'},
+  {n:'Estação Firenze S. M. Novella',c:[43.7765,11.2480],stay:20,g:'Firenze Santa Maria Novella'},
+  {n:'Estação Roma Termini',c:[41.9010,12.5018],stay:0,off:1,leg:['trem de alta velocidade',95]},
+  {...H.roma,off:1}]},
+ '22/11':{start:'08:30',mode:'transit',intro:'Com os Museus Vaticanos fechados, o domingo rende mais assim: Roma Antiga de manhã e a Basílica de São Pedro à tarde.',stops:[
+  {...H.roma},
+  {n:'Coliseu',c:[41.8902,12.4922],stay:90,leg:['metrô B, de Termini a Colosseo',15],g:'Colosseo, Roma',note:'Ingresso com hora marcada, a comprar antes. O mesmo vale para o Fórum.'},
+  {n:'Fórum Romano e Palatino',c:[41.8925,12.4853],stay:75,g:'Foro Romano, Roma'},
+  {n:'Piazza Venezia',c:[41.8946,12.4831],stay:20,g:'Piazza Venezia, Roma',note:'Monumento a Vittorio Emanuele II.'},
+  {n:'Almoço perto da Piazza Venezia',c:[41.8960,12.4815],stay:75},
+  {n:'Basílica de São Pedro',c:[41.9022,12.4539],stay:90,leg:['táxi ou ônibus',20],g:'Basilica di San Pietro, Vaticano',note:'Entrada gratuita, com fila na segurança. Ombros e joelhos cobertos.'},
+  {n:'Castelo Sant’Angelo',c:[41.9031,12.4663],stay:30,g:'Castel Sant Angelo, Roma',note:'Por fora, com a ponte dos anjos. Já anoitecendo.'},
+  {...H.roma,leg:['táxi',20]}]},
+ '23/11':{start:'14:15',mode:'walking',intro:'Primeira tarde em Veneza: caminhar até a Praça São Marcos e voltar de barco pelo Grande Canal ao anoitecer.',stops:[
+  {...H.veneza,note:'Almoço perto do hotel antes de sair.'},
+  {n:'Ponte de Rialto',c:[45.4380,12.3359],stay:30,leg:['a pé pela Strada Nova',25],g:'Ponte di Rialto, Venezia'},
+  {n:'Praça São Marcos',c:[45.4341,12.3388],stay:60,leg:['a pé',10],g:'Piazza San Marco, Venezia',note:'Só a praça e a orla hoje. Basílica e Palácio ficam para amanhã.'},
+  {...H.veneza,leg:['vaporetto linha 1 pelo Grande Canal, até Ferrovia',45]}]},
+ '24/11':{start:'09:00',mode:'walking',intro:'O dia cheio de Veneza: os dois grandes monumentos de manhã e uma volta a pé pelos bairros à tarde.',stops:[
+  {...H.veneza},
+  {n:'Basílica de São Marcos',c:[45.4345,12.3397],stay:60,leg:['vaporetto linha 2, de Ferrovia a San Marco',30],g:'Basilica di San Marco, Venezia',note:'Vale reservar o horário pelo site oficial para evitar a fila.'},
+  {n:'Palácio Ducal',c:[45.4337,12.3404],stay:90,leg:['a pé',5],g:'Palazzo Ducale, Venezia',note:'Inclui a Ponte dos Suspiros por dentro.'},
+  {n:'Almoço perto de São Marcos',c:[45.4335,12.3370],stay:75,leg:['a pé',5]},
+  {n:'Ponte da Accademia',c:[45.4316,12.3289],stay:15,leg:['a pé',15],g:'Ponte dell Accademia, Venezia',note:'A melhor vista do Grande Canal.'},
+  {n:'Santa Maria della Salute',c:[45.4306,12.3345],stay:30,leg:['a pé',10],g:'Basilica di Santa Maria della Salute, Venezia'},
+  {n:'Basílica dei Frari',c:[45.4369,12.3266],stay:30,leg:['a pé',25],g:'Basilica dei Frari, Venezia',note:'Obras de Ticiano. Passeio de gôndola opcional neste trecho.'},
+  {...H.veneza,leg:['a pé',15]}]},
+ '25/11':{start:'11:15',mode:'transit',intro:'Malas no hotel e direto ao centro: o Duomo antes do almoço e uma caminhada até o castelo à tarde.',stops:[
+  {...H.milao},
+  {n:'Duomo de Milão',c:[45.4641,9.1919],stay:90,leg:['metrô até a estação Duomo',20],g:'Duomo di Milano',note:'Catedral e terraços. Ingresso pelo site oficial, com hora marcada para o terraço.'},
+  {n:'Almoço perto do Duomo',c:[45.4650,9.1935],stay:75},
+  {n:'Galleria Vittorio Emanuele II',c:[45.4658,9.1900],stay:30,g:'Galleria Vittorio Emanuele II, Milano'},
+  {n:'Teatro alla Scala',c:[45.4674,9.1896],stay:15,g:'Teatro alla Scala, Milano',note:'Por fora.'},
+  {n:'Bairro de Brera',c:[45.4720,9.1878],stay:45,g:'Pinacoteca di Brera, Milano',note:'Ruas de pedestres, cafés e galerias.'},
+  {n:'Castelo Sforzesco',c:[45.4705,9.1795],stay:45,g:'Castello Sforzesco, Milano',note:'Pátios com entrada gratuita.'},
+  {...H.milao,leg:['metrô',25]}]},
+ '27/11':{start:'08:00',mode:'walking',intro:'Verona se faz a pé a partir da estação. O horário supõe um trem por volta das 08:30, a ajustar com o bilhete.',stops:[
+  {...H.milao,off:1},
+  {n:'Estação Milano Centrale',c:[45.4861,9.2042],stay:20,off:1},
+  {n:'Estação Verona Porta Nuova',c:[45.4290,10.9824],stay:5,leg:['trem',75],g:'Verona Porta Nuova'},
+  {n:'Arena de Verona',c:[45.4390,10.9944],stay:45,g:'Arena di Verona',note:'Anfiteatro romano na Piazza Bra. Da estação até aqui também há ônibus.'},
+  {n:'Casa de Julieta',c:[45.4419,10.9985],stay:20,g:'Casa di Giulietta, Verona',note:'O pátio com o balcão. Costuma ter fila.'},
+  {n:'Piazza delle Erbe',c:[45.4432,10.9972],stay:30,g:'Piazza delle Erbe, Verona'},
+  {n:'Almoço perto da Piazza delle Erbe',c:[45.4437,10.9980],stay:75},
+  {n:'Ponte Pietra',c:[45.4477,11.0000],stay:20,g:'Ponte Pietra, Verona',note:'Ponte romana sobre o rio Ádige.'},
+  {n:'Castelvecchio',c:[45.4398,10.9880],stay:30,g:'Castelvecchio, Verona',note:'Castelo e ponte medieval.'},
+  {n:'Estação Verona Porta Nuova',c:[45.4290,10.9824],stay:15,g:'Verona Porta Nuova'},
+  {n:'Estação Milano Centrale',c:[45.4861,9.2042],stay:0,off:1,leg:['trem',75]},
+  {...H.milao,off:1}]},
+ '28/11':{start:'09:00',mode:'walking',intro:'Dia curto e tranquilo: a cidade alta medieval de Bergamo, com volta cedo para arrumar as malas.',stops:[
+  {...H.milao,off:1},
+  {n:'Estação Milano Centrale',c:[45.4861,9.2042],stay:15,off:1},
+  {n:'Estação de Bergamo',c:[45.6906,9.6753],stay:5,leg:['trem regional',50],g:'Stazione di Bergamo'},
+  {n:'Funicular para a Città Alta',c:[45.6999,9.6657],stay:10,g:'Funicolare Città Alta, Bergamo',note:'Também dá para ir de ônibus linha 1 da estação.'},
+  {n:'Piazza Vecchia',c:[45.7040,9.6627],stay:30,leg:['funicular e a pé',10],g:'Piazza Vecchia, Bergamo'},
+  {n:'Santa Maria Maggiore e Capela Colleoni',c:[45.7034,9.6622],stay:40,g:'Basilica di Santa Maria Maggiore, Bergamo'},
+  {n:'Almoço na Città Alta',c:[45.7043,9.6618],stay:75,note:'Pratos da casa: polenta e casoncelli.'},
+  {n:'Muralhas e Porta San Giacomo',c:[45.7015,9.6640],stay:20,g:'Porta San Giacomo, Bergamo',note:'Vista da cidade baixa e da planície.'},
+  {n:'Estação de Bergamo',c:[45.6906,9.6753],stay:15,leg:['a pé, descendo',25],g:'Stazione di Bergamo'},
+  {n:'Estação Milano Centrale',c:[45.4861,9.2042],stay:0,off:1,leg:['trem regional',50]},
+  {...H.milao,off:1}]},
+ '29/11':{start:'16:30',mode:'walking',intro:'O hotel fica a 10 minutos da Torre Eiffel. Este roteiro supõe chegada ao hotel até as 16h; se chegarem mais tarde, façam só a torre.',stops:[
+  {...H.paris},
+  {n:'Champ de Mars',c:[48.8556,2.2986],stay:15,g:'Champ de Mars, Paris'},
+  {n:'Torre Eiffel',c:[48.8584,2.2945],stay:30,g:'Tour Eiffel, Paris',note:'Por baixo e ao redor. Subir exige ingresso e pelo menos 1h30.'},
+  {n:'Trocadéro',c:[48.8616,2.2893],stay:25,g:'Trocadéro, Paris',note:'A vista clássica da torre. À noite ela pisca por 5 minutos a cada hora cheia.'},
+  {...H.paris,leg:['metrô linha 6, de Trocadéro a Dupleix',20],note:'Tempo para se arrumar. Saída para o jantar das 21:15 por volta das 20:15.'}]},
+ '30/11':{start:'15:00',mode:'walking',intro:'Primeira tarde em Lisboa: descer a pé do hotel até o Tejo e terminar no alto, com a cidade iluminada.',stops:[
+  {...H.lisboa},
+  {n:'Praça dos Restauradores',c:[38.7160,-9.1415],stay:10,leg:['a pé pela Avenida da Liberdade',20],g:'Praça dos Restauradores, Lisboa'},
+  {n:'Rossio',c:[38.7139,-9.1394],stay:15,g:'Praça do Rossio, Lisboa'},
+  {n:'Elevador de Santa Justa',c:[38.7121,-9.1394],stay:15,g:'Elevador de Santa Justa, Lisboa',note:'Por fora. A fila para subir costuma ser longa.'},
+  {n:'Praça do Comércio',c:[38.7075,-9.1364],stay:30,leg:['a pé pela Rua Augusta',10],g:'Praça do Comércio, Lisboa',note:'Pôr do sol sobre o Tejo, por volta das 17:15.'},
+  {n:'Chiado',c:[38.7106,-9.1423],stay:30,g:'Largo do Chiado, Lisboa',note:'Café A Brasileira e a estátua de Fernando Pessoa.'},
+  {n:'Miradouro de São Pedro de Alcântara',c:[38.7153,-9.1442],stay:20,g:'Miradouro de São Pedro de Alcântara, Lisboa'},
+  {n:'Jantar no Bairro Alto',c:[38.7135,-9.1450],stay:90},
+  {...H.lisboa,leg:['táxi',15]}]},
+ '01/12':{start:'09:00',mode:'transit',intro:'Manhã inteira em Belém, o conjunto mais importante de Lisboa. É feriado em Portugal: os monumentos abrem, parte do comércio fecha.',stops:[
+  {...H.lisboa},
+  {n:'Mosteiro dos Jerónimos',c:[38.6979,-9.2068],stay:90,leg:['táxi ou bonde 15E',35],g:'Mosteiro dos Jerónimos, Lisboa',note:'Chegar na abertura. Ingresso pelo site oficial evita a fila.'},
+  {n:'Pastéis de Belém',c:[38.6975,-9.2032],stay:30,g:'Pastéis de Belém, Lisboa',note:'Entrar para sentar anda mais rápido que a fila do balcão.'},
+  {n:'Padrão dos Descobrimentos',c:[38.6936,-9.2057],stay:30,g:'Padrão dos Descobrimentos, Lisboa'},
+  {n:'Torre de Belém',c:[38.6916,-9.2160],stay:40,g:'Torre de Belém, Lisboa',note:'Conferir antes se a visita interna está aberta. Por fora já vale.'},
+  {n:'Almoço em Belém',c:[38.6968,-9.2010],stay:75,leg:['a pé',20]},
+  {...H.lisboa,leg:['táxi ou bonde 15E',35],note:'Tarde livre. O Parque Eduardo VII fica a 10 minutos a pé do hotel.'}]},
+ '02/12':{start:'09:30',mode:'transit',intro:'Último dia: a Lisboa antiga de Alfama pela manhã e compras na Baixa à tarde, com volta cedo.',stops:[
+  {...H.lisboa},
+  {n:'Sé de Lisboa',c:[38.7098,-9.1326],stay:30,leg:['metrô até Baixa-Chiado e a pé',30],g:'Sé de Lisboa'},
+  {n:'Miradouro de Santa Luzia',c:[38.7116,-9.1303],stay:20,leg:['a pé, subindo',10],g:'Miradouro de Santa Luzia, Lisboa',note:'Azulejos e vista de Alfama até o rio.'},
+  {n:'Castelo de São Jorge',c:[38.7139,-9.1335],stay:90,leg:['a pé, subindo',10],g:'Castelo de São Jorge, Lisboa'},
+  {n:'Almoço em Alfama',c:[38.7112,-9.1312],stay:75,leg:['a pé, descendo',10]},
+  {n:'Rua Augusta e Baixa',c:[38.7103,-9.1370],stay:60,leg:['a pé',15],g:'Rua Augusta, Lisboa',note:'Últimas compras.'},
+  {...H.lisboa,leg:['metrô',20],note:'Malas prontas e dormir cedo: saída às 05:30.'}]}
+};
+function walkMin(a,b){const R=6371000,r=Math.PI/180,dl=(b[0]-a[0])*r,dn=(b[1]-a[1])*r;
+  const x=Math.sin(dl/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)**2;
+  const m=2*R*Math.asin(Math.sqrt(x))*1.3;return {m,min:Math.max(5,Math.round(m/75/5)*5)};}
+function schedule(rt){let [h,mi]=rt.start.split(':').map(Number),t=h*60+mi,walk=0;const f=v=>String(Math.floor(v/60)).padStart(2,'0')+':'+String(v%60).padStart(2,'0');
+  return {rows:rt.stops.map((s,i)=>{let leg=null;
+    if(i){const p=rt.stops[i-1];if(s.leg){leg={txt:s.leg[0],min:s.leg[1]};if(/^a pé/.test(s.leg[0]))walk+=walkMin(p.c,s.c).m;}else{const w=walkMin(p.c,s.c);leg={txt:'a pé',min:w.min};walk+=w.m;}t+=leg.min;}
+    const arr=t;t+=(s.stay||0);return {s,leg,arr:f(arr),dep:f(t),last:i===rt.stops.length-1};}),end:f(t),walkKm:walk/1000};}
+
+function routeHtml(x){
+  const rt=ROUTES[x.d];if(!rt)return '';
+  const sc=schedule(rt);
+  // mapa esquemático: pontos na posição geográfica real, sem ruas
+  const pts=[];sc.rows.forEach((w,i)=>{if(w.s.off)return;const k=w.s.c.join(',');if(!pts.some(q=>q.k===k))pts.push({k,c:w.s.c,i:i+1,hotel:/^(Hotel|Timhotel)/.test(w.s.n)});});
+  const path=sc.rows.filter(w=>!w.s.off).map(w=>w.s.c);
+  const la=pts.map(q=>q.c[0]),lo=pts.map(q=>q.c[1]),k=Math.cos(la[0]*Math.PI/180);
+  const x0=Math.min(...lo)*k,x1=Math.max(...lo)*k,y0=Math.min(...la),y1=Math.max(...la);
+  const W=320,Hh=190,P=24,s=Math.min((W-2*P)/Math.max(x1-x0,1e-6),(Hh-2*P)/Math.max(y1-y0,1e-6));
+  const ox=(W-(x1-x0)*s)/2,oy=(Hh-(y1-y0)*s)/2;
+  const X=c=>(ox+(c[1]*k-x0)*s).toFixed(1),Y=c=>(oy+(y1-c[0])*s).toFixed(1);
+  const map=`<svg class="rmap" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Mapa esquemático do roteiro">
+    <polyline points="${path.map(c=>X(c)+','+Y(c)).join(' ')}" fill="none" stroke="var(--c)" stroke-width="2.5" stroke-dasharray="1 6" stroke-linecap="round"/>
+    ${pts.map(q=>`<g><circle cx="${X(q.c)}" cy="${Y(q.c)}" r="10" fill="${q.hotel?'var(--ink)':'var(--c)'}" stroke="#fff" stroke-width="2"/><text x="${X(q.c)}" y="${(+Y(q.c)+3.6).toFixed(1)}" text-anchor="middle">${q.hotel?'H':q.i}</text></g>`).join('')}
+    <text x="${W-10}" y="16" text-anchor="end" class="north">N ↑</text></svg>`;
+  const list=sc.rows.map((w,i)=>{
+    const leg=w.leg?`<small class="legl">↓ ${w.leg.min} min · ${w.leg.txt}</small>`:'';
+    const stay=w.s.stay?` <span class="stay">${w.s.stay>=60?Math.floor(w.s.stay/60)+'h'+(w.s.stay%60?String(w.s.stay%60).padStart(2,'0'):''):w.s.stay+' min'}</span>`:'';
+    return `<li><span class="t">${w.arr}</span><div class="w">${leg}<b><span class="num">${i+1}</span> ${w.s.n}</b>${stay}${w.s.note?`<small>${w.s.note}</small>`:''}</div></li>`;}).join('');
+  const g=rt.stops.filter(q=>q.g&&!q.off).map(q=>q.g).filter((v,i,a)=>!i||a[i-1]!==v);
+  const enc=encodeURIComponent,mid=g.slice(1,-1);
+  const url='https://www.google.com/maps/dir/?api=1&origin='+enc(g[0])+'&destination='+enc(g[g.length-1])+(mid.length?'&waypoints='+enc(mid.join('|')):'')+'&travelmode='+rt.mode;
+  return `<div class="route"><span class="ttl">Roteiro sugerido</span><p class="rintro">${rt.intro}</p>
+    <p class="rsum">Saída ${rt.start} · volta ${sc.end} · ${sc.walkKm.toFixed(1).replace('.',',')} km a pé</p>${map}
+    <ol class="agenda">${list}</ol>
+    <div><a class="btn solid" href="${url}" rel="noopener">Abrir a rota no Google Maps</a></div>
+    <p class="rcap">Horários estimados. Trechos a pé calculados pela distância; metrô, táxi, barco e trem são aproximados. O mapa mostra a posição dos pontos, sem as ruas.</p></div>`;
+}
+const DAYDOCS={'03/12':['iberia']};
+const CONTACTS=[
+ ['Emergência na Europa','112'],
+ ['Interline Turismo (WhatsApp)','+55 83 99979-6093'],
+ ['Interline Turismo (e-mail)','interline.jpa@uol.com.br'],
+ ['Seguro Mastercard · Itália','800-870-866'],
+ ['Seguro Mastercard · França','0-800-90-1387'],
+ ['Seguro Mastercard · Suíça','0800-89-7092'],
+ ['Seguro Mastercard · Portugal','800-8-11-272'],
+ ['Seguro Mastercard · Espanha','900-97-1231'],
+ ['Seguro SulAmérica (internacional)','+55 11 4126-7463']
+];
+const LABEL={ok:'Reservado',todo:'A comprar',free:'Sugestão',crit:'Atenção'};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CHEV='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+let files=[],assets=null,db=null,canDelete=false,msgs={},busy={},armed=null;
+const okId=s=>typeof s==='string'&&/^[A-Za-z0-9_-]{8,64}$/.test(s);
+const kb=n=>n>1048576?(n/1048576).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(n/1024))+' KB';
+/* Documentos embutidos na página: abrem para qualquer pessoa com o link. aid = anexo de origem, para não duplicar. */
+const STATIC=[
+ {slot:'italo-roma-veneza',name:'Bilhete Italo Roma → Veneza',imgs:['docs/italo-roma-veneza-1.jpg'],aid:'31d0062949eb0f5c266a95fd69ee1ae5'},
+ {slot:'italo-veneza-milao',name:'Bilhete Italo Veneza → Milão',imgs:['docs/italo-veneza-milao-1.jpg'],aid:'e61cfe0b0b5661508b15ff698f1ca8fc'},
+ {slot:'transavia',name:'Voo Transavia Paris → Lisboa',imgs:['docs/transavia-1.jpg'],aid:'55dfbf421c0e75ba77f44a1d0e007c55'},
+ {slot:'st-moritz',name:'Voucher St. Moritz',imgs:['docs/st-moritz-1.jpg','docs/st-moritz-2.jpg'],aid:'e42f2fcca66cd4861cc17d1ee0c3d4c7'},
+ {slot:'hotel-roma',casal:'juan',name:'Voucher hotel Roma',imgs:['docs/hotel-roma-1.jpg','docs/hotel-roma-2.jpg'],aid:'1d9a479adf4492eb9b88862fee188911'},
+ {slot:'hotel-veneza',casal:'juan',name:'Voucher hotel Veneza',imgs:['docs/hotel-veneza-1.jpg'],aid:'476f7488f8ff26c21e8a966310a3236a'},
+ {slot:'hotel-milao',casal:'juan',name:'Voucher hotel Milão',imgs:['docs/hotel-milao-1.jpg'],aid:'51fe8e5b5eb86ea53ad26edeccc2111e'},
+ {slot:'hotel-paris',casal:'juan',name:'Voucher hotel Paris',imgs:['docs/hotel-paris-1.jpg','docs/hotel-paris-2.jpg'],aid:'daeadaa6e1c2174527bad77734d3eca4'},
+ {slot:'hotel-lisboa',casal:'juan',name:'Voucher hotel Lisboa',imgs:['docs/hotel-lisboa-1.jpg','docs/hotel-lisboa-2.jpg'],aid:'0399f421f9b8e6d186450b3a838d9e00'}
+];
+const STATIC_AIDS=new Set(STATIC.map(s=>s.aid));
+const staticOf=(id,c)=>STATIC.map((s,i)=>({...s,i})).filter(s=>s.slot===id&&(!c||s.casal===c));
+const sBtn=s=>`<button type="button" class="btn solid" data-static="${s.i}">Abrir</button>`;
+const COUPLES=[['juan','Juan e Adriana'],['marcelo','Marcelo e Grinete'],['derlopidas','Derlópidas e Eulália']];
+const perCouple=s=>s.who!=='Grupo'&&!s.noup;
+const filesOf=(id,c)=>files.filter(f=>f.slot===id&&!STATIC_AIDS.has(f.assetId)&&(!c||(f.casal||'juan')===c));
+const hasDoc=(s,c)=>filesOf(s.id,c).length>0||staticOf(s.id,c).length>0||!!s.have||(!!c&&(s.haveBy||[]).includes(c));
+const viewBtn=(f,label)=>`<button type="button" class="btn solid" data-view="${f.assetId}" data-name="${esc(f.name||'Documento')}">${label||'Abrir'}</button>`;
+
+function dayDocsHtml(x){
+  const list=DOCS.filter(s=>s.d===x.d||(DAYDOCS[x.d]||[]).includes(s.id));
+  if(!list.length)return '';
+  return '<div class="daydocs"><span class="ttl">Documentos do dia</span>'+list.map(s=>{
+    const fs=filesOf(s.id),ss=staticOf(s.id);let st;
+    if(s.noup)st='<span class="chip free">Levar em mãos</span>';
+    else if(perCouple(s)){const n=COUPLES.filter(c=>hasDoc(s,c[0])).length;
+      st=`<span class="chip ${n===3?'ok':s.req?'crit':'todo'}">${n} de 3 casais</span>`+ss.map(sBtn).join(' ')+fs.map(f=>viewBtn(f)).join(' ');}
+    else st=(ss.length||fs.length)?ss.map(sBtn).join(' ')+fs.map(f=>viewBtn(f)).join(' '):hasDoc(s)?'<span class="chip ok">Em mãos</span>':s.req?'<span class="chip crit">Falta</span>':'<span class="chip todo">Opcional</span>';
+    return `<div><span>${s.name}</span>${st}</div>`;}).join('')+'</div>';
+}
+function renderDays(){
+  const open=new Set([...document.querySelectorAll('details.day[open]')].map(e=>e.dataset.d));
+  let html='',leg=null,n=0;
+  for(const x of DAYS){
+    n++;
+    if(x.k!==leg&&LEGS[x.k]&&!(leg&&x.k==='recife')){html+=`<h2 class="leg" style="--c:var(--${x.k})"><i></i>${LEGS[x.k]}</h2>`;}
+    leg=x.k;
+    const flag=x.flag?`<span class="chip ${x.flag[0]} flag">${x.flag[1]}</span>`:'';
+    const ag=x.ag.filter(r=>!(ROUTES[x.d]&&r[3]==='free')).map(r=>`<li><span class="t">${r[0]}</span><div class="w"><b>${r[1]}</b>${r[3]?` <span class="chip ${r[3]}">${LABEL[r[3]]}</span>`:''}${r[2]?`<small>${r[2]}</small>`:''}</div></li>`).join('');
+    const al=x.alert?`<div class="alert ${x.alert[0]==='crit'?'crit':''}"><b>${x.alert[1]}</b>${x.alert[2]}</div>`:'';
+    const tp=TIPS[x.d]?`<div class="tips"><span class="ttl">Bom saber neste dia</span><ul>${TIPS[x.d].map(t=>`<li>${t}</li>`).join('')}</ul></div>`:'';
+    const sl=x.hotel?`<p class="sleep">Dorme em <b>${x.hotel}</b></p>`:'';
+    html+=`<details class="day" data-d="${x.d}" style="--c:var(--${x.k})"${open.has(x.d)?' open':''}>
+      <summary><div class="stamp"><b>${x.d}</b><span>${x.w}</span><small>dia ${n}</small></div>
+      <div class="sum"><p class="city">${x.city}</p><h3>${x.title}</h3><ul class="hi">${x.hi.map(h=>`<li>${h}</li>`).join('')}</ul>${flag}</div>${CHEV}</summary>
+      <div class="more">${al}<ol class="agenda">${ag}</ol>${routeHtml(x)}${tp}${sl}${dayDocsHtml(x)}</div></details>`;
+  }
+  $('days').innerHTML=html;
+}
+function unitHtml(s,c){
+  const key=s.id+'|'+(c||''),fs=filesOf(s.id,c),ss=staticOf(s.id,c),has=hasDoc(s,c),miss=s.req&&!has;
+  const chip=has?`<span class="chip ok">${fs.length||ss.length?'Em mãos':'Conferido'}</span>`:s.req?`<span class="chip crit">${s.crit?'Falta · crítico':'Falta'}</span>`:`<span class="chip todo">${c?'A confirmar':'Opcional'}</span>`;
+  const list=ss.map(s2=>`<li>${sBtn(s2)}<span class="meta">${s2.name} · ${s2.imgs.length} pág.</span></li>`).join('')+fs.map(f=>`<li>${viewBtn(f)}<span class="meta">${esc(f.name||'Documento')}${f.size?' · '+kb(f.size):''}</span>${canDelete?`<button type="button" class="btn del ${armed===f.id?'sure':''}" data-del="${esc(f.id)}">${armed===f.id?'Confirmar remoção':'Remover'}</button>`:''}</li>`).join('');
+  const up=assets&&db?`<div><button type="button" class="btn ${miss?'red':''}" data-up="${key}" ${busy[key]?'disabled':''}>${busy[key]?'Enviando…':fs.length||ss.length?'Anexar outro':'Anexar documento'}</button></div>`:'';
+  const m=msgs[key]?`<p class="msg ${msgs[key].err?'err':''}">${esc(msgs[key].t)}</p>`:'';
+  return {chip,body:(list?`<ul class="files">${list}</ul>`:'')+up+m,has,miss};
+}
+function renderDocs(){
+  let need=0,got=0;
+  $('docs').innerHTML=DOCS.map(s=>{
+    let head,body,miss=false;
+    if(s.noup){head='<span class="chip free">Levar em mãos</span>';body='';}
+    else if(perCouple(s)){
+      const us=COUPLES.map(c=>[c,unitHtml(s,c[0])]);
+      us.forEach(([c,u])=>{if(s.req){need++;if(u.has)got++;}if(u.miss)miss=true;});
+      const n=us.filter(([c,u])=>u.has).length;
+      head=`<span class="chip ${n===3?'ok':s.req?'crit':'todo'}">${n} de 3 casais</span>`;
+      body=us.map(([c,u])=>`<div class="cp"><div class="cph"><span class="cname">${c[1]}</span>${u.chip}</div>${u.body}</div>`).join('');
+    }else{
+      const u=unitHtml(s,'');if(s.req){need++;if(u.has)got++;}miss=u.miss;head=u.chip;body=u.body;
+    }
+    return `<article class="doc ${miss?'miss':''}" style="--c:var(--${s.k})"><div class="stamp"><b>${s.d}</b><span>${s.who==='Grupo'?'grupo':s.who==='Por casal'?'casal':'cada um'}</span></div>
+      <div class="b"><div class="head"><span class="name">${s.name}</span>${head}</div><p class="note">${s.note}</p>${body}</div></article>`;
+  }).join('');
+  const missing=need-got;
+  $('prog').textContent=`${got} de ${need} documentos em mãos`;
+  $('progbar').style.width=(need?Math.round(got/need*100):0)+'%';
+  $('badge').textContent=missing||'';$('badge').style.display=missing?'':'none';
+}
+function renderAll(){renderDays();renderDocs();}
+renderAll();
+$('contacts').innerHTML=CONTACTS.map(c=>`<dt>${c[0]}</dt><dd>${c[1]}</dd>`).join('');
+
+(function(){const now=new Date(),n=Math.ceil((new Date(2026,10,19)-now)/864e5);
+  $('count').textContent=n>1?`faltam ${n} dias`:n===1?'embarque amanhã':n===0?'embarque hoje':now<new Date(2026,11,4)?'boa viagem':'viagem concluída';
+  const key=String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0');
+  if(now.getFullYear()===2026){const el=document.querySelector(`details.day[data-d="${key}"]`);if(el)el.open=true;}})();
+
+const VIEWS=['viagem','documentos'];
+function show(){const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'viagem';
+  VIEWS.forEach(n=>$('v-'+n).classList.toggle('on',n===v));
+  document.querySelectorAll('nav.tabs a').forEach(a=>a.dataset.v===v?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));}
+addEventListener('hashchange',show);show();
+
+const picker=document.createElement('input');picker.type='file';picker.id='picker';picker.accept='application/pdf,image/png,image/jpeg,image/webp';picker.hidden=true;document.body.appendChild(picker);
+let target=null;
+const TYPES={pdf:'application/pdf',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',webp:'image/webp'};
+document.addEventListener('click',async e=>{
+  const vw=e.target.closest('[data-view]'),up=e.target.closest('[data-up]'),del=e.target.closest('[data-del]');
+  const sv=e.target.closest('[data-static]');
+  if(sv){e.preventDefault();openStatic(STATIC[+sv.dataset.static]);return;}
+  if(vw){e.preventDefault();openDoc(vw.dataset.view,vw.dataset.name);return;}
+  if(up){target=up.dataset.up;picker.value='';picker.click();return;}
+  if(del){const id=del.dataset.del;
+    if(armed!==id){armed=id;renderDocs();return;}
+    armed=null;const f=files.find(x=>x.id===id);if(!f)return;
+    const key=f.slot+'|'+(perCouple(DOCS.find(s=>s.id===f.slot)||{who:'Grupo'})?(f.casal||'juan'):'');
+    try{await db.collection('docs').doc(id).delete();try{await assets.delete(f.assetId);}catch(_){}}
+    catch(_){msgs[key]={err:1,t:'Não foi possível remover. Tente de novo.'};}
+    renderDocs();}
+});
+picker.addEventListener('change',async()=>{
+  const file=picker.files[0],key=target;if(!file||!key)return;
+  const [slot,casal]=key.split('|');
+  const type=TYPES[(file.name.split('.').pop()||'').toLowerCase()];
+  if(!type){msgs[key]={err:1,t:'Formato não aceito. Envie PDF, JPG, PNG ou WEBP.'};return renderDocs();}
+  if(file.size>20*1048576){msgs[key]={err:1,t:'Arquivo acima de 20 MB. Envie uma versão menor.'};return renderDocs();}
+  busy[key]=1;delete msgs[key];renderDocs();
+  try{
+    const r=await assets.upload(file,{type});
+    const row={slot,assetId:r.id,name:file.name.slice(0,120),size:r.sizeBytes,at:new Date().toISOString()};
+    if(casal)row.casal=casal;
+    await db.collection('docs').add(row);
+    msgs[key]={t:'Documento anexado.'};
+  }catch(err){
+    const c=err&&err.code;
+    msgs[key]={err:1,t:c==='too_large'?'Arquivo grande demais.':c==='unsupported_type'?'Formato não aceito.':c==='quota_or_state'?'Limite de armazenamento da página atingido.':'Não foi possível anexar. Tente de novo em instantes.'};
+  }
+  delete busy[key];renderDocs();
+});
+
+/* Visualizador dentro da página: o arquivo é lido aqui e desenhado na tela, sem abrir outra aba. */
+const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+let pdfReady=null,viewSeq=0;
+const loadScript=src=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>no(new Error('script'));document.head.appendChild(s);});
+function loadPdf(){return pdfReady||(pdfReady=loadScript(PDFJS+'pdf.min.js').then(()=>loadScript(PDFJS+'pdf.worker.min.js')).then(()=>{window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+'pdf.worker.min.js';return window.pdfjsLib;}).catch(e=>{pdfReady=null;throw e;}));}
+function closeDoc(){viewSeq++;$('viewer').classList.remove('on');$('vbody').innerHTML='';}
+async function openDoc(id,name){
+  if(!okId(id))return;
+  const seq=++viewSeq,body=$('vbody');
+  $('vname').textContent=name||'Documento';body.innerHTML='<p>Abrindo…</p>';$('viewer').classList.add('on');$('vclose').focus();
+  try{
+    const res=await fetch('/_blob/'+id);
+    if(!res.ok)throw new Error('http '+res.status);
+    const type=(res.headers.get('content-type')||'').split(';')[0],buf=await res.arrayBuffer();
+    if(seq!==viewSeq)return;
+    if(type.startsWith('image/')){
+      const img=new Image();img.alt=name||'Documento';img.src=URL.createObjectURL(new Blob([buf],{type}));body.innerHTML='';body.appendChild(img);return;
+    }
+    const lib=await loadPdf();
+    const pdf=await lib.getDocument({data:buf}).promise;
+    if(seq!==viewSeq)return;
+    body.innerHTML='';
+    const width=Math.min(body.clientWidth-24,900),dpr=Math.min(window.devicePixelRatio||1,2);
+    for(let i=1;i<=pdf.numPages;i++){
+      const page=await pdf.getPage(i);if(seq!==viewSeq)return;
+      const vp=page.getViewport({scale:width/page.getViewport({scale:1}).width*dpr});
+      const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;cv.style.width=width+'px';
+      body.appendChild(cv);
+      await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+    }
+  }catch(err){
+    if(seq!==viewSeq)return;
+    body.innerHTML='';const p=document.createElement('p');
+    p.textContent='Não foi possível abrir este documento agora. Feche e tente de novo. ('+(err&&err.message||'erro')+')';body.appendChild(p);
+  }
+}
+function openStatic(s){
+  if(!s)return;viewSeq++;const body=$('vbody');
+  $('vname').textContent=s.name;body.innerHTML='';
+  s.imgs.forEach((src,i)=>{const img=new Image();img.alt=s.name+', página '+(i+1);img.src=src;body.appendChild(img);});
+  $('viewer').classList.add('on');$('vclose').focus();
+}
+$('vclose').addEventListener('click',closeDoc);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('viewer').classList.contains('on'))closeDoc();});
+
+(async()=>{
+  const st=$('docstatus');
+  if(!window.claude||!claude.use)return;
+  const [d,a,u]=await Promise.all([claude.use('db'),claude.use('assets'),claude.use('user')]);
+  db=d;assets=a;
+  try{canDelete=!!(a&&u&&await u.canEdit());}catch(_){canDelete=false;}
+  if(!db||!assets){renderDocs();return;}
+  const say=()=>{st.textContent='Você é o organizador: pode anexar documentos em cada item. Anexos novos só aparecem para o grupo depois de incluídos na página.';};
+  const timer=setTimeout(()=>{st.textContent='Os anexos ainda não responderam. A lista pode estar desatualizada.';},10000);
+  db.collection('docs').onSnapshot(snap=>{
+    files=snap.docs.map(x=>({id:x.id,...x.data()})).filter(f=>okId(f.assetId)&&typeof f.slot==='string')
+      .sort((p,q)=>String(p.at).localeCompare(String(q.at)));
+    if(!snap.metadata.fromCache){clearTimeout(timer);say();}
+    renderAll();
+  },()=>{clearTimeout(timer);st.textContent='Não foi possível carregar os anexos agora.';});
+  renderDocs();
+})();
+</script>
+</body>
+</html>
