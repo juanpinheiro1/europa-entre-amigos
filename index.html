@@ -296,15 +296,15 @@ const DAYS=[
   ag:[['05:30','Sair do hotel para o aeroporto','',''],
       ['08:20','Iberia IB530 Lisboa → Madri','Pousa às 10:45.','ok'],
       ['10:45','Conexão em Madri: 1h20','Do terminal 4 para o 4S, com controle de passaporte no caminho. Ir direto ao portão.',''],
-      ['12:05','Iberia IB139 Madri → Recife','Horário confirmado. 1 mala de 23 kg por pessoa.','ok'],
+      ['12:05','Iberia IB139 Madri → Recife','Dois bilhetes mostram 12:05 e o de Marcelo e Grinete mostra 11:50. Conferir no check-in online e, na dúvida, valer o mais cedo. 1 mala de 23 kg por pessoa.','ok'],
       ['16:45','Chegada ao Recife','','']]}
 ];
 const LEGS={recife:'',roma:'Roma',veneza:'Veneza',milao:'Milão',paris:'Paris',lisboa:'Lisboa'};
 /* Documentos em ordem de uso. req obrigatório · have conferido fora da página · noup não se anexa */
 const DOCS=[
  {id:'passaporte',d:'Antes',k:'recife',name:'Passaporte',who:'Individual',req:0,noup:1,note:'Válido pelo menos até 03/03/2027. Não anexar: cada um leva o seu.'},
- {id:'seguro',d:'Antes',k:'recife',name:'Seguro viagem',who:'Individual',req:0,haveBy:['juan','derlopidas'],note:'Cobertura mínima de € 30 mil. Cada um leva o seu no celular. Não fica na página porque traz CPF e endereço.'},
- {id:'iberia',d:'19/11',k:'recife',name:'Bilhete Iberia Recife ⇄ Europa',who:'Por casal',req:1,haveBy:['juan'],note:'Ida em 19/11 e volta em 03/12. Localizadores: Juan e Adriana QNQ39; Derlópidas e Eulália H68YJ.'},
+ {id:'seguro',d:'Antes',k:'recife',name:'Seguro viagem',who:'Individual',req:0,haveBy:['juan','derlopidas','marcelo'],note:'Cobertura mínima de € 30 mil. Cada um leva o seu no celular. Não fica na página porque traz CPF e endereço.'},
+ {id:'iberia',d:'19/11',k:'recife',name:'Bilhete Iberia Recife ⇄ Europa',who:'Por casal',req:1,haveBy:['juan'],note:'Ida em 19/11 e volta em 03/12. Localizadores: Juan e Adriana QNQ39; Derlópidas e Eulália H68YJ; Marcelo e Grinete NQYZM.'},
  {id:'hotel-roma',d:'20/11',k:'roma',name:'Voucher do hotel em Roma',who:'Por casal',req:1,note:'Palladium Palace, 20 a 23/11.'},
  {id:'trem-florenca',d:'21/11',k:'roma',name:'Trem Roma ⇄ Florença',who:'Grupo',req:1,note:'A comprar, para o sábado 21/11.'},
  {id:'coliseu',d:'22/11',k:'roma',name:'Ingressos do Coliseu e Fórum Romano',who:'Grupo',req:1,note:'A comprar, para a manhã de 22/11, com hora marcada.'},
@@ -509,6 +509,7 @@ const CONTACTS=[
  ['Seguro Mastercard · Espanha','900-97-1231'],
  ['Seguro SulAmérica (internacional)','+55 11 4126-7463'],
  ['Seguro Vital Card (ligação a cobrar)','+1 786 233 7254'],
+ ['Seguro de Marcelo e Grinete (central 24h, WhatsApp)','+55 11 4660-0428'],
  ['Seguro Vital Card · Espanha','+34 91 060 5956']
 ];
 const LABEL={ok:'Reservado',todo:'A comprar',free:'Sugestão',crit:'Atenção'};
@@ -533,6 +534,12 @@ const STATIC=[
  {slot:'hotel-milao',casal:'derlopidas',name:'Voucher hotel Milão',imgs:['docs/hotel-milao-derlopidas-1.jpg'],aid:'-'},
  {slot:'hotel-paris',casal:'derlopidas',name:'Voucher hotel Paris',imgs:['docs/hotel-paris-derlopidas-1.jpg'],aid:'-'},
  {slot:'hotel-lisboa',casal:'derlopidas',name:'Voucher hotel Lisboa',imgs:['docs/hotel-lisboa-derlopidas-1.jpg'],aid:'-'},
+ {slot:'iberia',casal:'marcelo',name:'Bilhetes Iberia',imgs:['docs/iberia-marcelo-a-1.jpg','docs/iberia-marcelo-b-1.jpg'],aid:'-'},
+ {slot:'hotel-roma',casal:'marcelo',name:'Voucher hotel Roma',imgs:['docs/hotel-roma-marcelo-1.jpg','docs/hotel-roma-marcelo-2.jpg'],aid:'-'},
+ {slot:'hotel-veneza',casal:'marcelo',name:'Voucher hotel Veneza',imgs:['docs/hotel-veneza-marcelo-1.jpg'],aid:'-'},
+ {slot:'hotel-milao',casal:'marcelo',name:'Voucher hotel Milão',imgs:['docs/hotel-milao-marcelo-1.jpg'],aid:'-'},
+ {slot:'hotel-paris',casal:'marcelo',name:'Voucher hotel Paris',imgs:['docs/hotel-paris-marcelo-1.jpg'],aid:'-'},
+ {slot:'hotel-lisboa',casal:'marcelo',name:'Voucher hotel Lisboa',imgs:['docs/hotel-lisboa-marcelo-1.jpg','docs/hotel-lisboa-marcelo-2.jpg'],aid:'-'},
  {slot:'iberia',casal:'juan',name:'Bilhete Iberia',imgs:['docs/iberia-juan-1.jpg','docs/iberia-juan-2.jpg'],aid:'765200247206f75fb12bf297387a848d'},
  {slot:'hotel-roma',casal:'juan',name:'Voucher hotel Roma',imgs:['docs/hotel-roma-1.jpg','docs/hotel-roma-2.jpg'],aid:'1d9a479adf4492eb9b88862fee188911'},
  {slot:'hotel-veneza',casal:'juan',name:'Voucher hotel Veneza',imgs:['docs/hotel-veneza-1.jpg'],aid:'476f7488f8ff26c21e8a966310a3236a'},
