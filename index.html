@@ -217,7 +217,7 @@ const DAYS=[
   ag:[['15:15','Chegar ao aeroporto do Recife','Três horas antes do voo. Passaporte, seguro e vouchers na bagagem de mão.',''],
       ['18:15','Iberia IB140 Recife → Madri','8 horas de voo. Pousa às 06:15 do dia 20. 1 mala de 23 kg por pessoa.','ok']]},
  {d:'20/11',w:'Sex',k:'roma',city:'Roma',title:'Chegada a Roma',hotel:'Hotel Palladium Palace · Via Gioberti, 36',
-  hi:['Conexão em Madri pela manhã','Chegada a Roma às 11:10','Fontana di Trevi e Pantheon à tarde'],
+  hi:['Chegada a Roma às 11:10','Santa Maria Maior, Piazza di Spagna e Fontana di Trevi','Pantheon, Piazza Navona e jantar'],
   ag:[['06:15','Pouso em Madri','Imigração europeia e coleta de biometria aqui. Chega no terminal 4S e o voo para Roma sai do terminal 4. Conexão de 2h30.',''],
       ['08:45','Iberia IB647 Madri → Roma','2h25 de voo.','ok'],
       ['11:10','Chegada a Roma Fiumicino','Trem Leonardo Express até a estação Termini, cerca de 32 min.',''],
@@ -346,13 +346,15 @@ const H={
  lisboa:{n:'Hotel HF Fénix Garden',c:[38.7243,-9.1508],g:'Rua Joaquim António de Aguiar 3, Lisboa'}
 };
 const ROUTES={
- '20/11':{start:'15:30',mode:'walking',intro:'Tarde leve depois da noite de voo: os três cartões-postais do centro, todos a poucos minutos um do outro.',stops:[
+ '20/11':{start:'15:00',mode:'walking',intro:'Tudo a pé, sem metrô: do hotel desce-se pelo centro, um ponto a cada dez minutos, quase sempre em descida. A volta é de táxi.',stops:[
   {...H.roma},
-  {n:'Piazza di Spagna',c:[41.9057,12.4823],stay:20,leg:['metrô A, de Termini a Spagna',15],g:'Piazza di Spagna, Roma',note:'Escadaria e Fontana della Barcaccia.'},
-  {n:'Fontana di Trevi',c:[41.9009,12.4833],stay:25,g:'Fontana di Trevi, Roma',note:'Ainda com luz do dia. O sol se põe por volta das 16:45.'},
-  {n:'Pantheon',c:[41.8986,12.4769],stay:30,g:'Pantheon, Roma',note:'Entrada paga, compra na hora ou pelo site.'},
+  {n:'Basílica de Santa Maria Maior',c:[41.8976,12.4984],stay:40,g:'Basilica di Santa Maria Maggiore, Roma',note:'Mosaicos do século V, o Santo Berço e os túmulos do Papa Francisco e de Bernini.'},
+  {n:'Piazza Barberini',c:[41.9038,12.4886],stay:10,leg:['a pé, pela Via delle Quattro Fontane',20],g:'Piazza Barberini, Roma',note:'No caminho, o cruzamento das Quattro Fontane. Na praça, a Fonte do Tritão, de Bernini.'},
+  {n:'Trinità dei Monti e Piazza di Spagna',c:[41.9059,12.4828],stay:25,leg:['a pé, pela Via Sistina',10],g:'Trinità dei Monti, Roma',note:'Chega-se pelo alto da escadaria, com a vista do pôr do sol. Descer os degraus até a Fontana della Barcaccia.'},
+  {n:'Fontana di Trevi',c:[41.9009,12.4833],stay:25,g:'Fontana di Trevi, Roma',note:'Ao anoitecer, já iluminada. Moeda com a mão direita, por cima do ombro esquerdo.'},
+  {n:'Pantheon',c:[41.8986,12.4769],stay:30,g:'Pantheon, Roma',note:'Entrada paga. Conferir o horário da última entrada.'},
   {n:'Piazza Navona',c:[41.8992,12.4731],stay:30,g:'Piazza Navona, Roma',note:'Fonte dos Quatro Rios, de Bernini.'},
-  {n:'Jantar perto da Piazza Navona',c:[41.8975,12.4725],stay:105,note:'Os restaurantes abrem para o jantar por volta das 19h. Antes disso, aperitivo.'},
+  {n:'Jantar perto da Piazza Navona',c:[41.8975,12.4725],stay:105,note:'Os restaurantes abrem para o jantar por volta das 19h.'},
   {...H.roma,leg:['táxi',15]}]},
  '21/11':{start:'07:30',mode:'walking',intro:'Florença é compacta: da estação dá para fazer tudo a pé. O horário abaixo supõe um trem por volta das 08:00, a ajustar quando o bilhete for comprado.',stops:[
   {...H.roma,off:1},
